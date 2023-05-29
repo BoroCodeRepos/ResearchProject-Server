@@ -1,0 +1,104 @@
+{% load static %}
+
+<!-- Sidebar -->
+<ul id="accordionSidebar" class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion">
+
+    <!-- Sidebar - Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'dashboard' %}">
+        <div class="sidebar-brand-icon rotate-n-15">
+            <i class="fas fa-laugh-wink"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">5@KIBI'2023pb PROJECT</div>
+    </a>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0">
+
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item {% if active == 'DASHBOARD' %}active{% endif %}">
+        <a class="nav-link" href="{% url 'dashboard' %}">
+            <i class="fas fa-fw fa-chart-line"></i>
+            <!--<i class="fas fa-fw fa-tachometer-alt"></i>-->
+            <span>Dashboard</span>
+        </a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">General</div>
+
+    <!-- Nav Item - About project -->
+    <li class="nav-item {% if active == 'ABOUT_PROJECT' %}active{% endif %}">
+        <a class="nav-link" href="#">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>About project</span>
+        </a>
+    </li>
+
+    <!-- Nav Item - About us -->
+    <li class="nav-item {% if active == 'ABOUT_US' %}active{% endif %}">
+        <a class="nav-link" href="{% url 'about_us' %}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>About us</span>
+        </a>
+    </li>
+
+    <!-- Nav Item - Publications Collapse Menu -->
+    <li class="nav-item {% if active == 'PUBLICATION' %}active{% endif %}">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Publications</span>
+        </a>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                {% for publication in publications %}
+                    <a class="collapse-item" href="{{ publication.get_absolute_url }}">{{ publication.title }}</a>
+                {% endfor %}
+            </div>
+        </div>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">Others</div>
+
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item {% if active == 'SOURCE' %}active{% endif %}">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+            <i class="fas fa-fw fa-folder"></i>
+            <span>Sources</span>
+        </a>
+        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                {% if sources_pub.count %}
+                    <h6 class="collapse-header">Publications:</h6>
+                    {% for source in sources_pub %}
+                        <a class="collapse-item" href="{{ source.get_absolute_url }}">{{ source.title }}</a>
+                    {% endfor %}
+                {% endif %}
+                {% if sources.pub.count and sources_oth.count %}
+                <div class="collapse-divider"></div>
+                {% endif %}
+                {% if sources_oth.count %}
+                    <h6 class="collapse-header">Other:</h6>
+                    {% for source in sources_oth %}
+                        <a class="collapse-item" href="{{ source.get_absolute_url }}">{{ source.title }}</a>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
+
+    <!-- Sidebar Toggler (Sidebar) -->
+    <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
+</ul>
+<!-- End of Sidebar -->

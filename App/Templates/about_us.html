@@ -1,0 +1,87 @@
+{% extends 'base_site.html' %}
+
+{% load templatetags %}
+
+{% block sidebar %}
+    {% include "sidebar.html" with publications=publications sources_pub=sources_pub sources_oth=sources_oth active="ABOUT_US" %}
+{% endblock %}
+
+{% block topbar %}
+    {% include "topbar.html" %}
+{% endblock %}
+
+{% block title %}About us | 5@KIBI{% endblock %}
+
+{% block content %}
+    <!-- Page Heading -->
+    <div id="pageHeading" class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">About us</h1>
+    </div>
+
+    <!-- Content Row -->
+    <div class="row">
+        <!-- Content Card -->
+        {% for profile in profiles|filter_ceo %}
+            <div class="col-12 mb-4">
+            <div class="card shadow mb-4">
+                <img class="card-img-top" src="{{ profile.image.url }}" alt="Card image cap">
+                <div class="card-body">
+                    <h4 class="card-title font-weight-bold d-flex justify-content-center">{{ profile.user.get_full_name }}</h4>
+                    <h5 class="card-title d-flex justify-content-center">{{ profile.position|full_position_name }}</h5>
+                    <p class="card-text">{{ profile.biography }}</p>
+                </div>
+                {% if schedules|filter_schedule_user:profile.user %}
+                    <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><h5 class="card-title">Tasks</h5>
+                        {% for task in schedules|filter_schedule_user:profile.user %}
+                            <h4 class="small font-weight-bold">{{ task.label }}<span class="float-right">{% if task.completion_percentage == 100 %}Complete!{% else %}{{ task.completion_percentage }}%{% endif %}</span></h4>
+                            <div class="progress mb-4">
+                                <div class="progress-bar {{ task.color }}" role="progressbar" style="width: {{ task.completion_percentage }}%"aria-valuenow="{{ task.completion_percentage }}" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>  
+                        {% endfor %}
+                        </li>
+                    </ul>
+                {% endif %}
+                <div class="card-body">
+                  <a href="#" class="card-link">Card link</a>
+                  <a href="#" class="card-link">Another link</a>
+                </div>
+            </div>
+            </div>
+        {% endfor %}
+        {% for profile in profiles|filter_contrib %}
+            <div class="col-xl-4 col-lg-6 col-md-12 mb-4">
+            <div class="card shadow mb-4">
+                <img class="card-img-top" src="{{ profile.image.url }}" alt="Card image cap">
+                <div class="card-body">
+                    <h4 class="card-title font-weight-bold d-flex justify-content-center">{{ profile.user.get_full_name }}</h4>
+                    <h5 class="card-title d-flex justify-content-center">{{ profile.position|full_position_name }}</h5>
+                    <p class="card-text">{{ profile.biography }}</p>
+                </div>
+                {% if schedules|filter_schedule_user:profile.user %}
+                    <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><h5 class="card-title">Tasks</h5>
+                        {% for task in schedules|filter_schedule_user:profile.user %}
+                            <h4 class="small font-weight-bold">{{ task.label }}<span class="float-right">{% if task.completion_percentage == 100 %}Complete!{% else %}{{ task.completion_percentage }}%{% endif %}</span></h4>
+                            <div class="progress mb-4">
+                                <div class="progress-bar {{ task.color }}" role="progressbar" style="width: {{ task.completion_percentage }}%"aria-valuenow="{{ task.completion_percentage }}" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>  
+                        {% endfor %}
+                        </li>
+                    </ul>
+                {% endif %}
+                <div class="card-body">
+                  <a href="#" class="card-link">Card link</a>
+                  <a href="#" class="card-link">Another link</a>
+                </div>
+            </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+
+
+{% block scripts %}
+
+{% endblock %}
